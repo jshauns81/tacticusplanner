@@ -1,0 +1,16 @@
+services:
+    tacticusplanner:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        image: tacticusplanner:local
+        container_name: tacticusplanner
+        restart: unless-stopped
+        ports:
+            - '8090:80'
+        healthcheck:
+            test: ['CMD', 'wget', '-qO-', 'http://localhost/healthz']
+            interval: 30s
+            timeout: 5s
+            retries: 3
+            start_period: 10s
